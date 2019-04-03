@@ -1,0 +1,983 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{first\_steps\_with\_tensor\_flow}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \hypertarget{copyright-2017-google-llc.}{%
+\paragraph{Copyright 2017 Google
+LLC.}\label{copyright-2017-google-llc.}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{c+c1}{\PYZsh{} Licensed under the Apache License, Version 2.0 (the \PYZdq{}License\PYZdq{});}
+        \PY{c+c1}{\PYZsh{} you may not use this file except in compliance with the License.}
+        \PY{c+c1}{\PYZsh{} You may obtain a copy of the License at}
+        \PY{c+c1}{\PYZsh{}}
+        \PY{c+c1}{\PYZsh{} https://www.apache.org/licenses/LICENSE\PYZhy{}2.0}
+        \PY{c+c1}{\PYZsh{}}
+        \PY{c+c1}{\PYZsh{} Unless required by applicable law or agreed to in writing, software}
+        \PY{c+c1}{\PYZsh{} distributed under the License is distributed on an \PYZdq{}AS IS\PYZdq{} BASIS,}
+        \PY{c+c1}{\PYZsh{} WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.}
+        \PY{c+c1}{\PYZsh{} See the License for the specific language governing permissions and}
+        \PY{c+c1}{\PYZsh{} limitations under the License.}
+\end{Verbatim}
+
+
+    \hypertarget{first-steps-with-tensorflow}{%
+\section{First Steps with
+TensorFlow}\label{first-steps-with-tensorflow}}
+
+    \textbf{Learning Objectives:} * Learn fundamental TensorFlow concepts *
+Use the \texttt{LinearRegressor} class in TensorFlow to predict median
+housing price, at the granularity of city blocks, based on one input
+feature * Evaluate the accuracy of a model's predictions using Root Mean
+Squared Error (RMSE) * Improve the accuracy of a model by tuning its
+hyperparameters
+
+    The
+\href{https://developers.google.com/machine-learning/crash-course/california-housing-data-description}{data}
+is based on 1990 census data from California.
+
+    \hypertarget{setup}{%
+\subsection{Setup}\label{setup}}
+
+In this first cell, we'll load the necessary libraries.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{from} \PY{n+nn}{\PYZus{}\PYZus{}future\PYZus{}\PYZus{}} \PY{k}{import} \PY{n}{print\PYZus{}function}
+        
+        \PY{k+kn}{import} \PY{n+nn}{math}
+        
+        \PY{k+kn}{from} \PY{n+nn}{IPython} \PY{k}{import} \PY{n}{display}
+        \PY{k+kn}{from} \PY{n+nn}{matplotlib} \PY{k}{import} \PY{n}{cm}
+        \PY{k+kn}{from} \PY{n+nn}{matplotlib} \PY{k}{import} \PY{n}{gridspec}
+        \PY{k+kn}{from} \PY{n+nn}{matplotlib} \PY{k}{import} \PY{n}{pyplot} \PY{k}{as} \PY{n}{plt}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+        \PY{k+kn}{from} \PY{n+nn}{sklearn} \PY{k}{import} \PY{n}{metrics}
+        \PY{k+kn}{import} \PY{n+nn}{tensorflow} \PY{k}{as} \PY{n+nn}{tf}
+        \PY{k+kn}{from} \PY{n+nn}{tensorflow}\PY{n+nn}{.}\PY{n+nn}{python}\PY{n+nn}{.}\PY{n+nn}{data} \PY{k}{import} \PY{n}{Dataset}
+        
+        \PY{n}{tf}\PY{o}{.}\PY{n}{logging}\PY{o}{.}\PY{n}{set\PYZus{}verbosity}\PY{p}{(}\PY{n}{tf}\PY{o}{.}\PY{n}{logging}\PY{o}{.}\PY{n}{ERROR}\PY{p}{)}
+        \PY{n}{pd}\PY{o}{.}\PY{n}{options}\PY{o}{.}\PY{n}{display}\PY{o}{.}\PY{n}{max\PYZus{}rows} \PY{o}{=} \PY{l+m+mi}{10}
+        \PY{n}{pd}\PY{o}{.}\PY{n}{options}\PY{o}{.}\PY{n}{display}\PY{o}{.}\PY{n}{float\PYZus{}format} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}:.1f\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}
+\end{Verbatim}
+
+
+    Next, we'll load our data set.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{n}{california\PYZus{}housing\PYZus{}dataframe} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{https://download.mlcc.google.com/mledu\PYZhy{}datasets/california\PYZus{}housing\PYZus{}train.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{sep}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{,}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    We'll randomize the data, just to be sure not to get any pathological
+ordering effects that might harm the performance of Stochastic Gradient
+Descent. Additionally, we'll scale \texttt{median\_house\_value} to be
+in units of thousands, so it can be learned a little more easily with
+learning rates in a range that we usually use.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{n}{california\PYZus{}housing\PYZus{}dataframe} \PY{o}{=} \PY{n}{california\PYZus{}housing\PYZus{}dataframe}\PY{o}{.}\PY{n}{reindex}\PY{p}{(}
+             \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{permutation}\PY{p}{(}\PY{n}{california\PYZus{}housing\PYZus{}dataframe}\PY{o}{.}\PY{n}{index}\PY{p}{)}\PY{p}{)}
+         \PY{n}{california\PYZus{}housing\PYZus{}dataframe}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{median\PYZus{}house\PYZus{}value}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]} \PY{o}{/}\PY{o}{=} \PY{l+m+mf}{1000.0}
+         \PY{n}{california\PYZus{}housing\PYZus{}dataframe}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}14}]:}        longitude  latitude  housing\_median\_age  total\_rooms  total\_bedrooms  \textbackslash{}
+         12259     -121.5      38.6                46.0       1476.0           344.0   
+         11414     -121.2      38.1                23.0        633.0            91.0   
+         11967     -121.4      38.6                27.0       2375.0           537.0   
+         2685      -117.7      34.1                32.0       1775.0           314.0   
+         5186      -118.1      33.9                29.0       2823.0           737.0   
+         {\ldots}          {\ldots}       {\ldots}                 {\ldots}          {\ldots}             {\ldots}   
+         13811     -122.0      37.0                21.0       5904.0           956.0   
+         10957     -120.9      37.5                29.0       1940.0           337.0   
+         16474     -122.6      38.4                10.0       9772.0          1308.0   
+         2945      -117.8      33.7                10.0       2815.0           431.0   
+         16497     -122.6      42.0                18.0       1867.0           424.0   
+         
+                population  households  median\_income  median\_house\_value  
+         12259       688.0       353.0            2.7               134.7  
+         11414       236.0        83.0            6.5               230.0  
+         11967       863.0       452.0            3.0               126.9  
+         2685       1067.0       302.0            4.0               121.3  
+         5186       1723.0       678.0            2.7               165.5  
+         {\ldots}           {\ldots}         {\ldots}            {\ldots}                 {\ldots}  
+         13811      2616.0       916.0            5.9               355.3  
+         10957      1070.0       332.0            3.7               145.6  
+         16474      3741.0      1242.0            6.5               324.7  
+         2945       1181.0       398.0            6.6               278.7  
+         16497       802.0       314.0            1.8                53.5  
+         
+         [17000 rows x 9 columns]
+\end{Verbatim}
+            
+    \hypertarget{examine-the-data}{%
+\subsection{Examine the Data}\label{examine-the-data}}
+
+It's a good idea to get to know your data a little bit before you work
+with it.
+
+We'll print out a quick summary of a few useful statistics on each
+column: count of examples, mean, standard deviation, max, min, and
+various quantiles.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{n}{california\PYZus{}housing\PYZus{}dataframe}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}3}]:}        longitude  latitude  housing\_median\_age  total\_rooms  total\_bedrooms  \textbackslash{}
+        count    17000.0   17000.0             17000.0      17000.0         17000.0   
+        mean      -119.6      35.6                28.6       2643.7           539.4   
+        std          2.0       2.1                12.6       2179.9           421.5   
+        min       -124.3      32.5                 1.0          2.0             1.0   
+        25\%       -121.8      33.9                18.0       1462.0           297.0   
+        50\%       -118.5      34.2                29.0       2127.0           434.0   
+        75\%       -118.0      37.7                37.0       3151.2           648.2   
+        max       -114.3      42.0                52.0      37937.0          6445.0   
+        
+               population  households  median\_income  median\_house\_value  
+        count     17000.0     17000.0        17000.0             17000.0  
+        mean       1429.6       501.2            3.9            207300.9  
+        std        1147.9       384.5            1.9            115983.8  
+        min           3.0         1.0            0.5             14999.0  
+        25\%         790.0       282.0            2.6            119400.0  
+        50\%        1167.0       409.0            3.5            180400.0  
+        75\%        1721.0       605.2            4.8            265000.0  
+        max       35682.0      6082.0           15.0            500001.0  
+\end{Verbatim}
+            
+    \hypertarget{build-the-first-model}{%
+\subsection{Build the First Model}\label{build-the-first-model}}
+
+In this exercise, we'll try to predict \texttt{median\_house\_value},
+which will be our label (sometimes also called a target). We'll use
+\texttt{total\_rooms} as our input feature.
+
+\textbf{NOTE:} Our data is at the city block level, so this feature
+represents the total number of rooms in that block.
+
+To train our model, we'll use the
+\href{https://www.tensorflow.org/api_docs/python/tf/estimator/LinearRegressor}{LinearRegressor}
+interface provided by the TensorFlow
+\href{https://www.tensorflow.org/get_started/estimator}{Estimator} API.
+This API takes care of a lot of the low-level model plumbing, and
+exposes convenient methods for performing model training, evaluation,
+and inference.
+
+    \hypertarget{step-1-define-features-and-configure-feature-columns}{%
+\subsubsection{Step 1: Define Features and Configure Feature
+Columns}\label{step-1-define-features-and-configure-feature-columns}}
+
+    In order to import our training data into TensorFlow, we need to specify
+what type of data each feature contains. There are two main types of
+data we'll use in this and future exercises:
+
+\begin{itemize}
+\item
+  \textbf{Categorical Data}: Data that is textual. In this exercise, our
+  housing data set does not contain any categorical features, but
+  examples you might see would be the home style, the words in a
+  real-estate ad.
+\item
+  \textbf{Numerical Data}: Data that is a number (integer or float) and
+  that you want to treat as a number. As we will discuss more later
+  sometimes you might want to treat numerical data (e.g., a postal code)
+  as if it were categorical.
+\end{itemize}
+
+In TensorFlow, we indicate a feature's data type using a construct
+called a \textbf{feature column}. Feature columns store only a
+description of the feature data; they do not contain the feature data
+itself.
+
+To start, we're going to use just one numeric input feature,
+\texttt{total\_rooms}. The following code pulls the
+\texttt{total\_rooms} data from our
+\texttt{california\_housing\_dataframe} and defines the feature column
+using \texttt{numeric\_column}, which specifies its data is numeric:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{c+c1}{\PYZsh{} Define the input feature: total\PYZus{}rooms.}
+         \PY{n}{my\PYZus{}feature} \PY{o}{=} \PY{n}{california\PYZus{}housing\PYZus{}dataframe}\PY{p}{[}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{total\PYZus{}rooms}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{]}
+         
+         \PY{c+c1}{\PYZsh{} Configure a numeric feature column for total\PYZus{}rooms.}
+         \PY{c+c1}{\PYZsh{} Feature columns store only a description of the feature data; they do not contain the feature data itself.}
+         \PY{n}{feature\PYZus{}columns} \PY{o}{=} \PY{p}{[}\PY{n}{tf}\PY{o}{.}\PY{n}{feature\PYZus{}column}\PY{o}{.}\PY{n}{numeric\PYZus{}column}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{total\PYZus{}rooms}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{]}
+\end{Verbatim}
+
+
+    \textbf{NOTE:} The shape of our \texttt{total\_rooms} data is a
+one-dimensional array (a list of the total number of rooms for each
+block). This is the default shape for \texttt{numeric\_column}, so we
+don't have to pass it as an argument.
+
+    \hypertarget{step-2-define-the-target}{%
+\subsubsection{Step 2: Define the
+Target}\label{step-2-define-the-target}}
+
+    Next, we'll define our target, which is \texttt{median\_house\_value}.
+Again, we can pull it from our \texttt{california\_housing\_dataframe}:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{c+c1}{\PYZsh{} Define the label.}
+         \PY{n}{targets} \PY{o}{=} \PY{n}{california\PYZus{}housing\PYZus{}dataframe}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{median\PYZus{}house\PYZus{}value}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}
+\end{Verbatim}
+
+
+    \hypertarget{step-3-configure-the-linearregressor}{%
+\subsubsection{Step 3: Configure the
+LinearRegressor}\label{step-3-configure-the-linearregressor}}
+
+    Next, we'll configure a linear regression model using LinearRegressor.
+We'll train this model using the \texttt{GradientDescentOptimizer},
+which implements Mini-Batch Stochastic Gradient Descent (SGD). The
+\texttt{learning\_rate} argument controls the size of the gradient step.
+
+\textbf{NOTE:} To be safe, we also apply
+\href{https://developers.google.com/machine-learning/glossary/\#gradient_clipping}{gradient
+clipping} to our optimizer via \texttt{clip\_gradients\_by\_norm}.
+Gradient clipping ensures the magnitude of the gradients do not become
+too large during training, which can cause gradient descent to fail.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{c+c1}{\PYZsh{} Use gradient descent as the optimizer for training the model.}
+         \PY{n}{my\PYZus{}optimizer}\PY{o}{=}\PY{n}{tf}\PY{o}{.}\PY{n}{train}\PY{o}{.}\PY{n}{GradientDescentOptimizer}\PY{p}{(}\PY{n}{learning\PYZus{}rate}\PY{o}{=}\PY{l+m+mf}{0.0000001}\PY{p}{)}
+         \PY{n}{my\PYZus{}optimizer} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{contrib}\PY{o}{.}\PY{n}{estimator}\PY{o}{.}\PY{n}{clip\PYZus{}gradients\PYZus{}by\PYZus{}norm}\PY{p}{(}\PY{n}{my\PYZus{}optimizer}\PY{p}{,} \PY{l+m+mf}{5.0}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} Configure the linear regression model with our feature columns and optimizer.}
+         \PY{c+c1}{\PYZsh{} Set a learning rate of 0.0000001 for Gradient Descent.}
+         \PY{n}{linear\PYZus{}regressor} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{estimator}\PY{o}{.}\PY{n}{LinearRegressor}\PY{p}{(}
+             \PY{n}{feature\PYZus{}columns}\PY{o}{=}\PY{n}{feature\PYZus{}columns}\PY{p}{,}
+             \PY{n}{optimizer}\PY{o}{=}\PY{n}{my\PYZus{}optimizer}
+         \PY{p}{)}
+\end{Verbatim}
+
+
+    \hypertarget{step-4-define-the-input-function}{%
+\subsubsection{Step 4: Define the Input
+Function}\label{step-4-define-the-input-function}}
+
+    To import our California housing data into our \texttt{LinearRegressor},
+we need to define an input function, which instructs TensorFlow how to
+preprocess the data, as well as how to batch, shuffle, and repeat it
+during model training.
+
+First, we'll convert our \emph{pandas} feature data into a dict of NumPy
+arrays. We can then use the TensorFlow
+\href{https://www.tensorflow.org/programmers_guide/datasets}{Dataset
+API} to construct a dataset object from our data, and then break our
+data into batches of \texttt{batch\_size}, to be repeated for the
+specified number of epochs (num\_epochs).
+
+\textbf{NOTE:} When the default value of \texttt{num\_epochs=None} is
+passed to \texttt{repeat()}, the input data will be repeated
+indefinitely.
+
+Next, if \texttt{shuffle} is set to \texttt{True}, we'll shuffle the
+data so that it's passed to the model randomly during training. The
+\texttt{buffer\_size} argument specifies the size of the dataset from
+which \texttt{shuffle} will randomly sample.
+
+Finally, our input function constructs an iterator for the dataset and
+returns the next batch of data to the LinearRegressor.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}18}]:} \PY{k}{def} \PY{n+nf}{my\PYZus{}input\PYZus{}fn}\PY{p}{(}\PY{n}{features}\PY{p}{,} \PY{n}{targets}\PY{p}{,} \PY{n}{batch\PYZus{}size}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{shuffle}\PY{o}{=}\PY{k+kc}{True}\PY{p}{,} \PY{n}{num\PYZus{}epochs}\PY{o}{=}\PY{k+kc}{None}\PY{p}{)}\PY{p}{:}
+             \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Trains a linear regression model of one feature.}
+         \PY{l+s+sd}{  }
+         \PY{l+s+sd}{    Args:}
+         \PY{l+s+sd}{      features: pandas DataFrame of features}
+         \PY{l+s+sd}{      targets: pandas DataFrame of targets}
+         \PY{l+s+sd}{      batch\PYZus{}size: Size of batches to be passed to the model}
+         \PY{l+s+sd}{      shuffle: True or False. Whether to shuffle the data.}
+         \PY{l+s+sd}{      num\PYZus{}epochs: Number of epochs for which data should be repeated. None = repeat indefinitely}
+         \PY{l+s+sd}{    Returns:}
+         \PY{l+s+sd}{      Tuple of (features, labels) for next data batch}
+         \PY{l+s+sd}{    \PYZdq{}\PYZdq{}\PYZdq{}}
+           
+             \PY{c+c1}{\PYZsh{} Convert pandas data into a dict of np arrays.}
+             \PY{n}{features} \PY{o}{=} \PY{p}{\PYZob{}}\PY{n}{key}\PY{p}{:}\PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{value}\PY{p}{)} \PY{k}{for} \PY{n}{key}\PY{p}{,}\PY{n}{value} \PY{o+ow}{in} \PY{n+nb}{dict}\PY{p}{(}\PY{n}{features}\PY{p}{)}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{\PYZcb{}}                                           
+          
+             \PY{c+c1}{\PYZsh{} Construct a dataset, and configure batching/repeating.}
+             \PY{n}{ds} \PY{o}{=} \PY{n}{Dataset}\PY{o}{.}\PY{n}{from\PYZus{}tensor\PYZus{}slices}\PY{p}{(}\PY{p}{(}\PY{n}{features}\PY{p}{,}\PY{n}{targets}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{} warning: 2GB limit}
+             \PY{n}{ds} \PY{o}{=} \PY{n}{ds}\PY{o}{.}\PY{n}{batch}\PY{p}{(}\PY{n}{batch\PYZus{}size}\PY{p}{)}\PY{o}{.}\PY{n}{repeat}\PY{p}{(}\PY{n}{num\PYZus{}epochs}\PY{p}{)}
+             
+             \PY{c+c1}{\PYZsh{} Shuffle the data, if specified.}
+             \PY{k}{if} \PY{n}{shuffle}\PY{p}{:}
+                 \PY{n}{ds} \PY{o}{=} \PY{n}{ds}\PY{o}{.}\PY{n}{shuffle}\PY{p}{(}\PY{n}{buffer\PYZus{}size}\PY{o}{=}\PY{l+m+mi}{10000}\PY{p}{)}
+             
+             \PY{c+c1}{\PYZsh{} Return the next batch of data.}
+             \PY{n}{features}\PY{p}{,} \PY{n}{labels} \PY{o}{=} \PY{n}{ds}\PY{o}{.}\PY{n}{make\PYZus{}one\PYZus{}shot\PYZus{}iterator}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{get\PYZus{}next}\PY{p}{(}\PY{p}{)}
+             \PY{k}{return} \PY{n}{features}\PY{p}{,} \PY{n}{labels}
+\end{Verbatim}
+
+
+    \textbf{NOTE:} We'll continue to use this same input function in later
+exercises. For more detailed documentation of input functions and the
+\texttt{Dataset} API, see the
+\href{https://www.tensorflow.org/programmers_guide/datasets}{TensorFlow
+Programmer's Guide}.
+
+    \hypertarget{step-5-train-the-model}{%
+\subsubsection{Step 5: Train the Model}\label{step-5-train-the-model}}
+
+    We can now call \texttt{train()} on our \texttt{linear\_regressor} to
+train the model. We'll wrap \texttt{my\_input\_fn} in a \texttt{lambda}
+so we can pass in \texttt{my\_feature} and \texttt{target} as arguments
+(see this
+\href{https://www.tensorflow.org/get_started/input_fn\#passing_input_fn_data_to_your_model}{TensorFlow
+input function tutorial} for more details), and to start, we'll train
+for 100 steps.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{n}{\PYZus{}} \PY{o}{=} \PY{n}{linear\PYZus{}regressor}\PY{o}{.}\PY{n}{train}\PY{p}{(}
+            \PY{n}{input\PYZus{}fn} \PY{o}{=} \PY{k}{lambda}\PY{p}{:}\PY{n}{my\PYZus{}input\PYZus{}fn}\PY{p}{(}\PY{n}{my\PYZus{}feature}\PY{p}{,} \PY{n}{targets}\PY{p}{)}\PY{p}{,}
+            \PY{n}{steps}\PY{o}{=}\PY{l+m+mi}{100}
+        \PY{p}{)}
+\end{Verbatim}
+
+
+    \hypertarget{step-6-evaluate-the-model}{%
+\subsubsection{Step 6: Evaluate the
+Model}\label{step-6-evaluate-the-model}}
+
+    Let's make predictions on that training data, to see how well our model
+fit it during training.
+
+\textbf{NOTE:} Training error measures how well your model fits the
+training data, but it \textbf{\emph{does not}} measure how well your
+model \textbf{\emph{generalizes to new data}}. In later exercises,
+you'll explore how to split your data to evaluate your model's ability
+to generalize.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{c+c1}{\PYZsh{} Create an input function for predictions.}
+         \PY{c+c1}{\PYZsh{} Note: Since we\PYZsq{}re making just one prediction for each example, we don\PYZsq{}t }
+         \PY{c+c1}{\PYZsh{} need to repeat or shuffle the data here.}
+         \PY{n}{prediction\PYZus{}input\PYZus{}fn} \PY{o}{=}\PY{k}{lambda}\PY{p}{:} \PY{n}{my\PYZus{}input\PYZus{}fn}\PY{p}{(}\PY{n}{my\PYZus{}feature}\PY{p}{,} \PY{n}{targets}\PY{p}{,} \PY{n}{num\PYZus{}epochs}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{shuffle}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} Call predict() on the linear\PYZus{}regressor to make predictions.}
+         \PY{n}{predictions} \PY{o}{=} \PY{n}{linear\PYZus{}regressor}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{input\PYZus{}fn}\PY{o}{=}\PY{n}{prediction\PYZus{}input\PYZus{}fn}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} Format predictions as a NumPy array, so we can calculate error metrics.}
+         \PY{n}{predictions} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{n}{item}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{predictions}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{k}{for} \PY{n}{item} \PY{o+ow}{in} \PY{n}{predictions}\PY{p}{]}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} Print Mean Squared Error and Root Mean Squared Error.}
+         \PY{n}{mean\PYZus{}squared\PYZus{}error} \PY{o}{=} \PY{n}{metrics}\PY{o}{.}\PY{n}{mean\PYZus{}squared\PYZus{}error}\PY{p}{(}\PY{n}{predictions}\PY{p}{,} \PY{n}{targets}\PY{p}{)}
+         \PY{n}{root\PYZus{}mean\PYZus{}squared\PYZus{}error} \PY{o}{=} \PY{n}{math}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}\PY{n}{mean\PYZus{}squared\PYZus{}error}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Mean Squared Error (on training data): }\PY{l+s+si}{\PYZpc{}0.3f}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{n}{mean\PYZus{}squared\PYZus{}error}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Root Mean Squared Error (on training data): }\PY{l+s+si}{\PYZpc{}0.3f}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{n}{root\PYZus{}mean\PYZus{}squared\PYZus{}error}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Mean Squared Error (on training data): 56367.025
+Root Mean Squared Error (on training data): 237.417
+
+    \end{Verbatim}
+
+    Is this a good model? How would you judge how large this error is?
+
+Mean Squared Error (MSE) can be hard to interpret, so we often look at
+Root Mean Squared Error (RMSE) instead. A nice property of RMSE is that
+it can be interpreted on the same scale as the original targets.
+
+Let's compare the RMSE to the difference of the min and max of our
+targets:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{n}{min\PYZus{}house\PYZus{}value} \PY{o}{=} \PY{n}{california\PYZus{}housing\PYZus{}dataframe}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{median\PYZus{}house\PYZus{}value}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{p}{)}
+         \PY{n}{max\PYZus{}house\PYZus{}value} \PY{o}{=} \PY{n}{california\PYZus{}housing\PYZus{}dataframe}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{median\PYZus{}house\PYZus{}value}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{p}{)}
+         \PY{n}{min\PYZus{}max\PYZus{}difference} \PY{o}{=} \PY{n}{max\PYZus{}house\PYZus{}value} \PY{o}{\PYZhy{}} \PY{n}{min\PYZus{}house\PYZus{}value}
+         
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Min. Median House Value: }\PY{l+s+si}{\PYZpc{}0.3f}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{n}{min\PYZus{}house\PYZus{}value}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Max. Median House Value: }\PY{l+s+si}{\PYZpc{}0.3f}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{n}{max\PYZus{}house\PYZus{}value}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Difference between Min. and Max.: }\PY{l+s+si}{\PYZpc{}0.3f}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{n}{min\PYZus{}max\PYZus{}difference}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Root Mean Squared Error: }\PY{l+s+si}{\PYZpc{}0.3f}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{n}{root\PYZus{}mean\PYZus{}squared\PYZus{}error}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Min. Median House Value: 14.999
+Max. Median House Value: 500.001
+Difference between Min. and Max.: 485.002
+Root Mean Squared Error: 237.417
+
+    \end{Verbatim}
+
+    Our error spans nearly half the range of the target values. Can we do
+better?
+
+This is the question that nags at every model developer. Let's develop
+some basic strategies to reduce model error.
+
+The first thing we can do is take a look at how well our predictions
+match our targets, in terms of overall summary statistics.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{calibration\PYZus{}data} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{p}{)}
+        \PY{n}{calibration\PYZus{}data}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{predictions}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{n}{predictions}\PY{p}{)}
+        \PY{n}{calibration\PYZus{}data}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{targets}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{n}{targets}\PY{p}{)}
+        \PY{n}{calibration\PYZus{}data}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    Okay, maybe this information is helpful. How does the mean value compare
+to the model's RMSE? How about the various quantiles?
+
+We can also visualize the data and the line we've learned. Recall that
+linear regression on a single feature can be drawn as a line mapping
+input \emph{x} to output \emph{y}.
+
+First, we'll get a uniform random sample of the data so we can make a
+readable scatter plot.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{sample} \PY{o}{=} \PY{n}{california\PYZus{}housing\PYZus{}dataframe}\PY{o}{.}\PY{n}{sample}\PY{p}{(}\PY{n}{n}\PY{o}{=}\PY{l+m+mi}{300}\PY{p}{)}
+\end{Verbatim}
+
+
+    Next, we'll plot the line we've learned, drawing from the model's bias
+term and feature weight, together with the scatter plot. The line will
+show up red.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{c+c1}{\PYZsh{} Get the min and max total\PYZus{}rooms values.}
+        \PY{n}{x\PYZus{}0} \PY{o}{=} \PY{n}{sample}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{total\PYZus{}rooms}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{p}{)}
+        \PY{n}{x\PYZus{}1} \PY{o}{=} \PY{n}{sample}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{total\PYZus{}rooms}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Retrieve the final weight and bias generated during training.}
+        \PY{n}{weight} \PY{o}{=} \PY{n}{linear\PYZus{}regressor}\PY{o}{.}\PY{n}{get\PYZus{}variable\PYZus{}value}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{linear/linear\PYZus{}model/total\PYZus{}rooms/weights}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+        \PY{n}{bias} \PY{o}{=} \PY{n}{linear\PYZus{}regressor}\PY{o}{.}\PY{n}{get\PYZus{}variable\PYZus{}value}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{linear/linear\PYZus{}model/bias\PYZus{}weights}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Get the predicted median\PYZus{}house\PYZus{}values for the min and max total\PYZus{}rooms values.}
+        \PY{n}{y\PYZus{}0} \PY{o}{=} \PY{n}{weight} \PY{o}{*} \PY{n}{x\PYZus{}0} \PY{o}{+} \PY{n}{bias} 
+        \PY{n}{y\PYZus{}1} \PY{o}{=} \PY{n}{weight} \PY{o}{*} \PY{n}{x\PYZus{}1} \PY{o}{+} \PY{n}{bias}
+        
+        \PY{c+c1}{\PYZsh{} Plot our regression line from (x\PYZus{}0, y\PYZus{}0) to (x\PYZus{}1, y\PYZus{}1).}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{p}{[}\PY{n}{x\PYZus{}0}\PY{p}{,} \PY{n}{x\PYZus{}1}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{n}{y\PYZus{}0}\PY{p}{,} \PY{n}{y\PYZus{}1}\PY{p}{]}\PY{p}{,} \PY{n}{c}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Label the graph axes.}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{median\PYZus{}house\PYZus{}value}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{total\PYZus{}rooms}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Plot a scatter plot from our data sample.}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{sample}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{total\PYZus{}rooms}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{n}{sample}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{median\PYZus{}house\PYZus{}value}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{} Display graph.}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    This initial line looks way off. See if you can look back at the summary
+stats and see the same information encoded there.
+
+Together, these initial sanity checks suggest we may be able to find a
+much better line.
+
+    \hypertarget{tweak-the-model-hyperparameters}{%
+\subsection{Tweak the Model
+Hyperparameters}\label{tweak-the-model-hyperparameters}}
+
+For this exercise, we've put all the above code in a single function for
+convenience. You can call the function with different parameters to see
+the effect.
+
+In this function, we'll proceed in 10 evenly divided periods so that we
+can observe the model improvement at each period.
+
+For each period, we'll compute and graph training loss. This may help
+you judge when a model is converged, or if it needs more iterations.
+
+We'll also plot the feature weight and bias term values learned by the
+model over time. This is another way to see how things converge.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k}{def} \PY{n+nf}{train\PYZus{}model}\PY{p}{(}\PY{n}{learning\PYZus{}rate}\PY{p}{,} \PY{n}{steps}\PY{p}{,} \PY{n}{batch\PYZus{}size}\PY{p}{,} \PY{n}{input\PYZus{}feature}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{total\PYZus{}rooms}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{:}
+          \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}Trains a linear regression model of one feature.}
+        \PY{l+s+sd}{  }
+        \PY{l+s+sd}{  Args:}
+        \PY{l+s+sd}{    learning\PYZus{}rate: A `float`, the learning rate.}
+        \PY{l+s+sd}{    steps: A non\PYZhy{}zero `int`, the total number of training steps. A training step}
+        \PY{l+s+sd}{      consists of a forward and backward pass using a single batch.}
+        \PY{l+s+sd}{    batch\PYZus{}size: A non\PYZhy{}zero `int`, the batch size.}
+        \PY{l+s+sd}{    input\PYZus{}feature: A `string` specifying a column from `california\PYZus{}housing\PYZus{}dataframe`}
+        \PY{l+s+sd}{      to use as input feature.}
+        \PY{l+s+sd}{  \PYZdq{}\PYZdq{}\PYZdq{}}
+          
+          \PY{n}{periods} \PY{o}{=} \PY{l+m+mi}{10}
+          \PY{n}{steps\PYZus{}per\PYZus{}period} \PY{o}{=} \PY{n}{steps} \PY{o}{/} \PY{n}{periods}
+        
+          \PY{n}{my\PYZus{}feature} \PY{o}{=} \PY{n}{input\PYZus{}feature}
+          \PY{n}{my\PYZus{}feature\PYZus{}data} \PY{o}{=} \PY{n}{california\PYZus{}housing\PYZus{}dataframe}\PY{p}{[}\PY{p}{[}\PY{n}{my\PYZus{}feature}\PY{p}{]}\PY{p}{]}
+          \PY{n}{my\PYZus{}label} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{median\PYZus{}house\PYZus{}value}\PY{l+s+s2}{\PYZdq{}}
+          \PY{n}{targets} \PY{o}{=} \PY{n}{california\PYZus{}housing\PYZus{}dataframe}\PY{p}{[}\PY{n}{my\PYZus{}label}\PY{p}{]}
+        
+          \PY{c+c1}{\PYZsh{} Create feature columns.}
+          \PY{n}{feature\PYZus{}columns} \PY{o}{=} \PY{p}{[}\PY{n}{tf}\PY{o}{.}\PY{n}{feature\PYZus{}column}\PY{o}{.}\PY{n}{numeric\PYZus{}column}\PY{p}{(}\PY{n}{my\PYZus{}feature}\PY{p}{)}\PY{p}{]}
+          
+          \PY{c+c1}{\PYZsh{} Create input functions.}
+          \PY{n}{training\PYZus{}input\PYZus{}fn} \PY{o}{=} \PY{k}{lambda}\PY{p}{:}\PY{n}{my\PYZus{}input\PYZus{}fn}\PY{p}{(}\PY{n}{my\PYZus{}feature\PYZus{}data}\PY{p}{,} \PY{n}{targets}\PY{p}{,} \PY{n}{batch\PYZus{}size}\PY{o}{=}\PY{n}{batch\PYZus{}size}\PY{p}{)}
+          \PY{n}{prediction\PYZus{}input\PYZus{}fn} \PY{o}{=} \PY{k}{lambda}\PY{p}{:} \PY{n}{my\PYZus{}input\PYZus{}fn}\PY{p}{(}\PY{n}{my\PYZus{}feature\PYZus{}data}\PY{p}{,} \PY{n}{targets}\PY{p}{,} \PY{n}{num\PYZus{}epochs}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{shuffle}\PY{o}{=}\PY{k+kc}{False}\PY{p}{)}
+          
+          \PY{c+c1}{\PYZsh{} Create a linear regressor object.}
+          \PY{n}{my\PYZus{}optimizer} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{train}\PY{o}{.}\PY{n}{GradientDescentOptimizer}\PY{p}{(}\PY{n}{learning\PYZus{}rate}\PY{o}{=}\PY{n}{learning\PYZus{}rate}\PY{p}{)}
+          \PY{n}{my\PYZus{}optimizer} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{contrib}\PY{o}{.}\PY{n}{estimator}\PY{o}{.}\PY{n}{clip\PYZus{}gradients\PYZus{}by\PYZus{}norm}\PY{p}{(}\PY{n}{my\PYZus{}optimizer}\PY{p}{,} \PY{l+m+mf}{5.0}\PY{p}{)}
+          \PY{n}{linear\PYZus{}regressor} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{estimator}\PY{o}{.}\PY{n}{LinearRegressor}\PY{p}{(}
+              \PY{n}{feature\PYZus{}columns}\PY{o}{=}\PY{n}{feature\PYZus{}columns}\PY{p}{,}
+              \PY{n}{optimizer}\PY{o}{=}\PY{n}{my\PYZus{}optimizer}
+          \PY{p}{)}
+        
+          \PY{c+c1}{\PYZsh{} Set up to plot the state of our model\PYZsq{}s line each period.}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{15}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{)}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Learned Line by Period}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{n}{my\PYZus{}label}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{n}{my\PYZus{}feature}\PY{p}{)}
+          \PY{n}{sample} \PY{o}{=} \PY{n}{california\PYZus{}housing\PYZus{}dataframe}\PY{o}{.}\PY{n}{sample}\PY{p}{(}\PY{n}{n}\PY{o}{=}\PY{l+m+mi}{300}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{scatter}\PY{p}{(}\PY{n}{sample}\PY{p}{[}\PY{n}{my\PYZus{}feature}\PY{p}{]}\PY{p}{,} \PY{n}{sample}\PY{p}{[}\PY{n}{my\PYZus{}label}\PY{p}{]}\PY{p}{)}
+          \PY{n}{colors} \PY{o}{=} \PY{p}{[}\PY{n}{cm}\PY{o}{.}\PY{n}{coolwarm}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{np}\PY{o}{.}\PY{n}{linspace}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{n}{periods}\PY{p}{)}\PY{p}{]}
+        
+          \PY{c+c1}{\PYZsh{} Train the model, but do so inside a loop so that we can periodically assess}
+          \PY{c+c1}{\PYZsh{} loss metrics.}
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Training model...}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{RMSE (on training data):}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+          \PY{n}{root\PYZus{}mean\PYZus{}squared\PYZus{}errors} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+          \PY{k}{for} \PY{n}{period} \PY{o+ow}{in} \PY{n+nb}{range} \PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{periods}\PY{p}{)}\PY{p}{:}
+            \PY{c+c1}{\PYZsh{} Train the model, starting from the prior state.}
+            \PY{n}{linear\PYZus{}regressor}\PY{o}{.}\PY{n}{train}\PY{p}{(}
+                \PY{n}{input\PYZus{}fn}\PY{o}{=}\PY{n}{training\PYZus{}input\PYZus{}fn}\PY{p}{,}
+                \PY{n}{steps}\PY{o}{=}\PY{n}{steps\PYZus{}per\PYZus{}period}
+            \PY{p}{)}
+            \PY{c+c1}{\PYZsh{} Take a break and compute predictions.}
+            \PY{n}{predictions} \PY{o}{=} \PY{n}{linear\PYZus{}regressor}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{input\PYZus{}fn}\PY{o}{=}\PY{n}{prediction\PYZus{}input\PYZus{}fn}\PY{p}{)}
+            \PY{n}{predictions} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{n}{item}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{predictions}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{k}{for} \PY{n}{item} \PY{o+ow}{in} \PY{n}{predictions}\PY{p}{]}\PY{p}{)}
+            
+            \PY{c+c1}{\PYZsh{} Compute loss.}
+            \PY{n}{root\PYZus{}mean\PYZus{}squared\PYZus{}error} \PY{o}{=} \PY{n}{math}\PY{o}{.}\PY{n}{sqrt}\PY{p}{(}
+                \PY{n}{metrics}\PY{o}{.}\PY{n}{mean\PYZus{}squared\PYZus{}error}\PY{p}{(}\PY{n}{predictions}\PY{p}{,} \PY{n}{targets}\PY{p}{)}\PY{p}{)}
+            \PY{c+c1}{\PYZsh{} Occasionally print the current loss.}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{  period }\PY{l+s+si}{\PYZpc{}02d}\PY{l+s+s2}{ : }\PY{l+s+si}{\PYZpc{}0.2f}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{p}{(}\PY{n}{period}\PY{p}{,} \PY{n}{root\PYZus{}mean\PYZus{}squared\PYZus{}error}\PY{p}{)}\PY{p}{)}
+            \PY{c+c1}{\PYZsh{} Add the loss metrics from this period to our list.}
+            \PY{n}{root\PYZus{}mean\PYZus{}squared\PYZus{}errors}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{root\PYZus{}mean\PYZus{}squared\PYZus{}error}\PY{p}{)}
+            \PY{c+c1}{\PYZsh{} Finally, track the weights and biases over time.}
+            \PY{c+c1}{\PYZsh{} Apply some math to ensure that the data and line are plotted neatly.}
+            \PY{n}{y\PYZus{}extents} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{sample}\PY{p}{[}\PY{n}{my\PYZus{}label}\PY{p}{]}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+            
+            \PY{n}{weight} \PY{o}{=} \PY{n}{linear\PYZus{}regressor}\PY{o}{.}\PY{n}{get\PYZus{}variable\PYZus{}value}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{linear/linear\PYZus{}model/}\PY{l+s+si}{\PYZpc{}s}\PY{l+s+s1}{/weights}\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}} \PY{n}{input\PYZus{}feature}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+            \PY{n}{bias} \PY{o}{=} \PY{n}{linear\PYZus{}regressor}\PY{o}{.}\PY{n}{get\PYZus{}variable\PYZus{}value}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{linear/linear\PYZus{}model/bias\PYZus{}weights}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        
+            \PY{n}{x\PYZus{}extents} \PY{o}{=} \PY{p}{(}\PY{n}{y\PYZus{}extents} \PY{o}{\PYZhy{}} \PY{n}{bias}\PY{p}{)} \PY{o}{/} \PY{n}{weight}
+            \PY{n}{x\PYZus{}extents} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{maximum}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{minimum}\PY{p}{(}\PY{n}{x\PYZus{}extents}\PY{p}{,}
+                                              \PY{n}{sample}\PY{p}{[}\PY{n}{my\PYZus{}feature}\PY{p}{]}\PY{o}{.}\PY{n}{max}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{,}
+                                   \PY{n}{sample}\PY{p}{[}\PY{n}{my\PYZus{}feature}\PY{p}{]}\PY{o}{.}\PY{n}{min}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+            \PY{n}{y\PYZus{}extents} \PY{o}{=} \PY{n}{weight} \PY{o}{*} \PY{n}{x\PYZus{}extents} \PY{o}{+} \PY{n}{bias}
+            \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{x\PYZus{}extents}\PY{p}{,} \PY{n}{y\PYZus{}extents}\PY{p}{,} \PY{n}{color}\PY{o}{=}\PY{n}{colors}\PY{p}{[}\PY{n}{period}\PY{p}{]}\PY{p}{)} 
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Model training finished.}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        
+          \PY{c+c1}{\PYZsh{} Output a graph of loss metrics over periods.}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{subplot}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{RMSE}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Periods}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Root Mean Squared Error vs. Periods}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{tight\PYZus{}layout}\PY{p}{(}\PY{p}{)}
+          \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{root\PYZus{}mean\PYZus{}squared\PYZus{}errors}\PY{p}{)}
+        
+          \PY{c+c1}{\PYZsh{} Output a table with calibration data.}
+          \PY{n}{calibration\PYZus{}data} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{DataFrame}\PY{p}{(}\PY{p}{)}
+          \PY{n}{calibration\PYZus{}data}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{predictions}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{n}{predictions}\PY{p}{)}
+          \PY{n}{calibration\PYZus{}data}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{targets}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{Series}\PY{p}{(}\PY{n}{targets}\PY{p}{)}
+          \PY{n}{display}\PY{o}{.}\PY{n}{display}\PY{p}{(}\PY{n}{calibration\PYZus{}data}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+        
+          \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Final RMSE (on training data): }\PY{l+s+si}{\PYZpc{}0.2f}\PY{l+s+s2}{\PYZdq{}} \PY{o}{\PYZpc{}} \PY{n}{root\PYZus{}mean\PYZus{}squared\PYZus{}error}\PY{p}{)}
+\end{Verbatim}
+
+
+    \hypertarget{task-1-achieve-an-rmse-of-180-or-below}{%
+\subsection{Task 1: Achieve an RMSE of 180 or
+Below}\label{task-1-achieve-an-rmse-of-180-or-below}}
+
+Tweak the model hyperparameters to improve loss and better match the
+target distribution. If, after 5 minutes or so, you're having trouble
+beating a RMSE of 180, check the solution for a possible combination.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{train\PYZus{}model}\PY{p}{(}
+            \PY{n}{learning\PYZus{}rate}\PY{o}{=}\PY{l+m+mf}{0.00001}\PY{p}{,}
+            \PY{n}{steps}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{,}
+            \PY{n}{batch\PYZus{}size}\PY{o}{=}\PY{l+m+mi}{1}
+        \PY{p}{)}
+\end{Verbatim}
+
+
+    \hypertarget{solution}{%
+\subsubsection{Solution}\label{solution}}
+
+Click below for one possible solution.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{train\PYZus{}model}\PY{p}{(}
+            \PY{n}{learning\PYZus{}rate}\PY{o}{=}\PY{l+m+mf}{0.00002}\PY{p}{,}
+            \PY{n}{steps}\PY{o}{=}\PY{l+m+mi}{500}\PY{p}{,}
+            \PY{n}{batch\PYZus{}size}\PY{o}{=}\PY{l+m+mi}{5}
+        \PY{p}{)}
+\end{Verbatim}
+
+
+    This is just one possible configuration; there may be other combinations
+of settings that also give good results. Note that in general, this
+exercise isn't about finding the \emph{one best} setting, but to help
+build your intutions about how tweaking the model configuration affects
+prediction quality.
+
+    \hypertarget{is-there-a-standard-heuristic-for-model-tuning}{%
+\subsubsection{Is There a Standard Heuristic for Model
+Tuning?}\label{is-there-a-standard-heuristic-for-model-tuning}}
+
+This is a commonly asked question. The short answer is that the effects
+of different hyperparameters are data dependent. So there are no
+hard-and-fast rules; you'll need to test on your data.
+
+That said, here are a few rules of thumb that may help guide you:
+
+\begin{itemize}
+\tightlist
+\item
+  Training error should steadily decrease, steeply at first, and should
+  eventually plateau as training converges.
+\item
+  If the training has not converged, try running it for longer.
+\item
+  If the training error decreases too slowly, increasing the learning
+  rate may help it decrease faster.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    But sometimes the exact opposite may happen if the learning rate is
+    too high.
+  \end{itemize}
+\item
+  If the training error varies wildly, try decreasing the learning rate.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Lower learning rate plus larger number of steps or larger batch size
+    is often a good combination.
+  \end{itemize}
+\item
+  Very small batch sizes can also cause instability. First try larger
+  values like 100 or 1000, and decrease until you see degradation.
+\end{itemize}
+
+Again, never go strictly by these rules of thumb, because the effects
+are data dependent. Always experiment and verify.
+
+    \hypertarget{task-2-try-a-different-feature}{%
+\subsection{Task 2: Try a Different
+Feature}\label{task-2-try-a-different-feature}}
+
+See if you can do any better by replacing the \texttt{total\_rooms}
+feature with the \texttt{population} feature.
+
+Don't take more than 5 minutes on this portion.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{c+c1}{\PYZsh{} YOUR CODE HERE}
+\end{Verbatim}
+
+
+    \hypertarget{solution}{%
+\subsubsection{Solution}\label{solution}}
+
+    Double-click \textbf{here} for one possible solution.
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
